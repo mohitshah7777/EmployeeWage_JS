@@ -4,20 +4,22 @@ const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
 const WAGE_PER_HOUR = 20;
 
-let empCheck = Math.floor(Math.random() * 10) % 3;
-let empHrs = 0;
-
-//UC-2
-switch (empCheck) {
-    case IS_PRESENT_FULL_TIME:                      //check if full time employee present
-        empHrs = FULL_TIME_HOURS;
-        break;
-    case IS_PRESENT_PART_TIME:                      //check if part time employee present
-        empHrs = PART_TIME_HOURS;
-        break;
-    default:                                        //if employee is absent
-        empHrs = 0;
-        break;
+//UC-3
+function getWorkingHrs(empCheck){
+    switch (empCheck) {
+        case IS_PRESENT_FULL_TIME:                      //check if full time employee present
+            return FULL_TIME_HOURS;
+            break;
+        case IS_PRESENT_PART_TIME:                      //check if part time employee present
+            return PART_TIME_HOURS;
+            break;
+        default:
+            return 0;                                        //if employee is absent
+    }
 }
-let empWage = empHrs * WAGE_PER_HOUR;               //calculating employee daily wages
+
+let empCheck = Math.floor(Math.random() * 10) % 3;
+let empHrs = getWorkingHrs(empCheck);
+
+let empWage = empHrs * WAGE_PER_HOUR;                   //calculating employee daily wages
 console.log("Daily Employee Wage : " + empWage);    
