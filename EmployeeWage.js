@@ -9,20 +9,23 @@ const MAX_WORKING_HRS_IN_MONTH = 160;
 let totalEmpHrs = 0;
 let totalWorkingDays = 0;
 let empDailyWageArray = new Array();                            //array declaration
-let empDailyWageMap = new Map();                                //map declaration
+let empDailyWageMap = new Map();                                //map daily wage declaration
+let empDailyHrsMap = new Map();                                 //map daily hours declaration
 
-//UC-8
+//UC-9
 while (totalEmpHrs < MAX_WORKING_HRS_IN_MONTH && totalWorkingDays < WORKING_DAYS_PER_MONTH) {
     totalWorkingDays++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
-    let empHrs = totalEmpHrs += getWorkingHrs(empCheck);                //getting working hours for a month
+    let empHrs = getWorkingHrs(empCheck);                //getting working hours for a month
     totalEmpHrs += empHrs;
     empDailyWageArray.push(calulateDailyWage(empHrs));                      //storing the values in the array
-    empDailyWageMap.set(totalWorkingDays, calulateDailyWage(empHrs))        //storing the values in the map
+    empDailyWageMap.set(totalWorkingDays, calulateDailyWage(empHrs));       //storing the daily wages in the map
+    empDailyHrsMap.set(totalWorkingDays, empHrs);                           //storing the daily hours in the map        
 }
 
 console.log(empDailyWageArray);
 console.log(empDailyWageMap);
+console.log(empDailyHrsMap);
 
 //UC-7A - Calc Total Wage Using Array for Each or Reduce Method
 let totEmpWage = 0;
@@ -73,6 +76,29 @@ function totalDaysEmpWorked(numOfDays, dailyWage) {
     return numOfDays;
 }
 console.log("Number of Days Employee Worked : " + empDailyWageArray.reduce(totalDaysEmpWorked, 0))
+
+//UC-9A - Calculate Total Wage and Total Hours Worked
+let findTotal = (totalVal, dailyVal) => {
+    return totalVal + dailyVal;
+}
+let count = 0;
+let totalHours = Array.from(empDailyHrsMap.values()).reduce(findTotal, 0);
+let totalSalary = empDailyWageArray.filter(dailyWage => dailyWage > 0).reduce(findTotal, 0);
+console.log("Employee Wage with Arrow => " + " Total Hours => " + totalHours + " Total Wages => " + totalSalary);
+
+//UC-9B - Show the full working days, part working days and no working days
+let nonWorkingDays = new Array();
+let partWorkingDays = new Array();
+let fullWorkingDays = new Array();
+
+empDailyHrsMap.forEach((value, key) => {
+    if (value == 8) fullWorkingDays.push(key);
+    else if (value == 4) partWorkingDays.push(key);
+    else nonWorkingDays.push(key);
+});
+console.log("Full Working Days : " + fullWorkingDays);
+console.log("Part Working Days : " + partWorkingDays);
+console.log("NonWorking Days : " + nonWorkingDays);
 
 function calulateDailyWage(empHrs) {
     return empHrs * WAGE_PER_HOUR;
