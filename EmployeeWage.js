@@ -4,16 +4,25 @@ const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
 const WAGE_PER_HOUR = 20;
 const WORKING_DAYS_PER_MONTH = 20;
-const MAX_WORKING_HRS_IN_MONTH = 100;
+const MAX_WORKING_HRS_IN_MONTH = 160;
 
 let totalEmpHrs = 0;
 let totalWorkingDays = 0;
+let empDailyWageArray = new Array();                            //array declaration
 
-//UC-5
+//UC-6
 while (totalEmpHrs < MAX_WORKING_HRS_IN_MONTH && totalWorkingDays < WORKING_DAYS_PER_MONTH) {
     totalWorkingDays++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
-    totalEmpHrs += getWorkingHrs(empCheck);             //getting working hours for a month
+    let empHrs = totalEmpHrs += getWorkingHrs(empCheck);        //getting working hours for a month
+    totalEmpHrs += empHrs;
+    empDailyWageArray.push(calulateDailyWage(empHrs));          //storing the values in the array
+}
+
+console.log(empDailyWageArray);
+
+function calulateDailyWage(empHrs) {
+    return empHrs * WAGE_PER_HOUR;
 }
 
 function getWorkingHrs(empCheck){
