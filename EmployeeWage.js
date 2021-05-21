@@ -9,17 +9,20 @@ const MAX_WORKING_HRS_IN_MONTH = 160;
 let totalEmpHrs = 0;
 let totalWorkingDays = 0;
 let empDailyWageArray = new Array();                            //array declaration
+let empDailyWageMap = new Map();                                //map declaration
 
-//UC-7
+//UC-8
 while (totalEmpHrs < MAX_WORKING_HRS_IN_MONTH && totalWorkingDays < WORKING_DAYS_PER_MONTH) {
     totalWorkingDays++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
-    let empHrs = totalEmpHrs += getWorkingHrs(empCheck);        //getting working hours for a month
+    let empHrs = totalEmpHrs += getWorkingHrs(empCheck);                //getting working hours for a month
     totalEmpHrs += empHrs;
-    empDailyWageArray.push(calulateDailyWage(empHrs));          //storing the values in the array
+    empDailyWageArray.push(calulateDailyWage(empHrs));                      //storing the values in the array
+    empDailyWageMap.set(totalWorkingDays, calulateDailyWage(empHrs))        //storing the values in the map
 }
 
 console.log(empDailyWageArray);
+console.log(empDailyWageMap);
 
 //UC-7A - Calc Total Wage Using Array for Each or Reduce Method
 let totEmpWage = 0;
